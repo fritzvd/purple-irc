@@ -1,4 +1,5 @@
 import sqlite3
+from twisted.internet import protocol, reactor
 from flask import *
 app = Flask(__name__)
 app.config.from_object(__name__)
@@ -17,6 +18,12 @@ def before_request():
 @app.teardown_request
 def teardown_request(exception):
     g.db.close()
+
+@app.route('/')
+def save_messages():
+	bot = TestBot("#nens", "test_bot", "irc.freenode.net", 6667)
+	bot.start()
+
 
 if __name__== "__main__":
 	app.run()
